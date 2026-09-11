@@ -1,0 +1,17 @@
+[project]
+name = "diobank"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Sarah Janne",email = "sarahjanne.enos@hotmail.com"}
+]
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi",
+    "uvicorn[standard] (>=0.52.4,<0.53.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
