@@ -1,6 +1,6 @@
 from datetime import UTC, datetime
 
-from schemas.account import ContaCreate, StatusConta
+from schemas.account import ContaCreate, StatusConta, OperacaoFinanceira
 
 
 fake_contas_db = [
@@ -52,3 +52,30 @@ class AccountService:
             if conta["numero_conta"] == numero_conta:
                 return conta
         return None
+
+    @staticmethod
+    def depositar(numero_conta: int, operacao: OperacaoFinanceira):
+        conta = AccountService.buscar_conta(numero_conta)
+        if not conta:
+            return None
+
+        if operacao.valor <= 0:
+            return "valor_invalido"
+
+        conta["saldo_inicial"] += operacao.valor
+        return conta
+
+    @staticmethod
+    def sacar(numero_conta: int, operacao: OperacaoFinanceira):
+        conta = AccountService.buscar_conta(numero_conta)
+        if not conta:
+            return None
+
+        if operacao.valor <= 0:
+            return "valor_invalido"
+
+        if conta["saldo_inicial"] < operacao.valor:
+            return "saldo_insuficiente"
+
+        conta["saldo_inicial"] -= operacao.valor
+        return conta
